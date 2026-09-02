@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rover Feed</title>
+</head>
+
+<body>
+  <h3>Rover Camera Feed</h3>
+  <video id="video" autoplay muted playsinline style="width: 100%; max-width: 640px; border: 1px solid black;"></video>
+  <pre id="status">connecting...</pre>
+
+  <script>
+    const video = document.getElementById('video');
+    const status = document.getElementById('status');
+
+    // Same-origin WebSocket back to whatever host served this page —
+    // so this works whether you open it via localhost or the server's LAN IP.
+    const ws = new WebSocket(`ws://${location.host}/signal`);
+
+    const pc = new RTCPeerConnection(); // no STUN/TURN — same-LAN test
+
+    // recvonly: this client only watches, it never sends its own camera.
+    pc.addTransceiver('video', { direction: 'recvonly' });
+
+    pc.ontrack = (event) => {
+      video.srcObject = event.streams[0];
+      status.textContent = 'track received';
+    };
+
+    pc.oniceconnectionstatechange = () => {
+      status.textContent = 'ICE state: ' + pc.iceConnectionState;
+    };
+
+    pc.onicecandidate = (event) => {
+      if (event.candidate) {
+        ws.send(JSON.stringify({ type: 'candidate', candidate: event.candidate }));
+      }
+    };
+
+    ws.onopen = async () => {
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      ws.send(JSON.stringify({ type: 'offer', sdp: pc.localDescription }));
+    };
+
+    ws.onmessage = async (msg) => {
+      const data = JSON.parse(msg.data);
+      if (data.type === 'answer') {
+        await pc.setRemoteDescription(data.sdp);
+      } else if (data.type === 'candidate' && data.candidate) {
+        await pc.addIceCandidate(data.candidate);
+      }
+    };
+
+    ws.onerror = (e) => { status.textContent = 'WebSocket error'; console.error(e); };
+  </script>
+</body>
+
+</html>
