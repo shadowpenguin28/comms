@@ -1,0 +1,46 @@
+2026/09/07 21:34:22 Config loaded: codec=h264 fps=30 device=/dev/video0 port=8080
+2026/09/07 21:34:22 Server listening on :8080 (client at http://<this-ip>:8080/)
+2026/09/07 21:34:29 client connected
+2026/09/07 21:34:29 ICE connection state: checking
+2026/09/07 21:34:29 ICE connection state: connected
+2026/09/07 21:34:29 Starting ffmpeg: ffmpeg [-f v4l2 -input_format mjpeg -framerate 30 -video_size 640x480 -i /dev/video0 -c:v libx264 -preset ultrafast -tune zerolatency -profile:v baseline -b:v 2M -maxrate 2M -bufsize 4M -g 30 -bsf:v dump_extra -f h264 -]
+2026/09/07 21:34:29 [ffmpeg] ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers
+2026/09/07 21:34:29 [ffmpeg]   built with gcc 13 (Ubuntu 13.2.0-23ubuntu3)
+2026/09/07 21:34:29 [ffmpeg]   configuration: --prefix=/usr --extra-version=3ubuntu5 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libvpl --disable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libjack --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libx264 --enable-libzmq --enable-libzvbi --enable-lv2 --enable-sdl2 --enable-libplacebo --enable-librav1e --enable-pocketsphinx --enable-librsvg --enable-libjxl --enable-shared
+2026/09/07 21:34:29 [ffmpeg]   libavutil      58. 29.100 / 58. 29.100
+2026/09/07 21:34:29 [ffmpeg]   libavcodec     60. 31.102 / 60. 31.102
+2026/09/07 21:34:29 [ffmpeg]   libavformat    60. 16.100 / 60. 16.100
+2026/09/07 21:34:29 [ffmpeg]   libavdevice    60.  3.100 / 60.  3.100
+2026/09/07 21:34:29 [ffmpeg]   libavfilter     9. 12.100 /  9. 12.100
+2026/09/07 21:34:29 [ffmpeg]   libswscale      7.  5.100 /  7.  5.100
+2026/09/07 21:34:29 [ffmpeg]   libswresample   4. 12.100 /  4. 12.100
+2026/09/07 21:34:29 [ffmpeg]   libpostproc    57.  3.100 / 57.  3.100
+2026/09/07 21:34:29 [ffmpeg] Input #0, video4linux2,v4l2, from '/dev/video0':
+2026/09/07 21:34:29 [ffmpeg]   Duration: N/A, start: 43914.630132, bitrate: N/A
+2026/09/07 21:34:29 [ffmpeg]   Stream #0:0: Video: mjpeg (Baseline), yuvj420p(pc, bt470bg/unknown/unknown), 640x480, 30 fps, 30 tbr, 1000k tbn
+2026/09/07 21:34:29 [ffmpeg] Stream mapping:
+2026/09/07 21:34:29 [ffmpeg]   Stream #0:0 -> #0:0 (mjpeg (native) -> h264 (libx264))
+2026/09/07 21:34:29 [ffmpeg] Press [q] to stop, [?] for help
+2026/09/07 21:34:29 [ffmpeg] [libx264 @ 0x5a82aea292c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2 AVX512
+2026/09/07 21:34:29 [ffmpeg] [libx264 @ 0x5a82aea292c0] profile Constrained Baseline, level 3.0, 4:2:0, 8-bit
+2026/09/07 21:34:29 [ffmpeg] Output #0, h264, to 'pipe:':
+2026/09/07 21:34:29 [ffmpeg]   Metadata:
+2026/09/07 21:34:29 [ffmpeg]     encoder         : Lavf60.16.100
+2026/09/07 21:34:29 [ffmpeg]   Stream #0:0: Video: h264, yuvj420p(pc, bt470bg/unknown/unknown, progressive), 640x480, q=2-31, 2000 kb/s, 30 fps, 30 tbn
+2026/09/07 21:34:29 [ffmpeg]     Metadata:
+2026/09/07 21:34:29 [ffmpeg]       encoder         : Lavc60.31.102 libx264
+2026/09/07 21:34:29 [ffmpeg]     Side data:
+2026/09/07 21:34:29 [ffmpeg]       cpb: bitrate max/min/avg: 2000000/0/2000000 buffer size: 4000000 vbv_delay: N/A
+2026/09/07 21:34:29 [h264] NAL type=7 (7) size=26 bytes
+2026/09/07 21:34:29 [h264] NAL type=8 (8) size=4 bytes
+2026/09/07 21:34:29 [h264] NAL type=5 (5) size=3954 bytes
+2026/09/07 21:34:29 [h264] NAL type=5 (5) size=7537 bytes
+2026/09/07 21:34:29 [h264] NAL type=5 (5) size=6870 bytes
+2026/09/07 21:34:32 Sent 90 H.264 frames to client...
+2026/09/07 21:34:35 Sent 180 H.264 frames to client...
+2026/09/07 21:34:38 Sent 270 H.264 frames to client...
+2026/09/07 21:34:41 Sent 360 H.264 frames to client...
+2026/09/07 21:34:44 Sent 450 H.264 frames to client...
+2026/09/07 21:34:47 Sent 540 H.264 frames to client...
+2026/09/07 21:34:50 Sent 630 H.264 frames to client...
+2026/09/07 21:34:53 Sent 720 H.264 frames to client...

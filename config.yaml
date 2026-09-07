@@ -1,0 +1,25 @@
+# for client: use lan ip: hostname -I | awk '{print $1}'
+
+server:
+  port: 8080
+  frontend_dir: "./frontend"
+
+camera:
+  device: "/dev/video0"
+  input_format: "mjpeg"          # v4l2 input format
+  width: 640
+  height: 480
+
+encoding:
+  codec: "vp8"                  # "h264" or "vp8"
+  fps: 30
+  bitrate: "2M"
+  max_bitrate: "2M"
+  buffer_size: "4M"
+  # H.264-specific
+  h264_preset: "ultrafast"
+  h264_tune: "zerolatency"
+  h264_profile: "baseline"       # baseline for maximum browser compat
+
+webrtc:
+  stun_servers: []               # e.g. ["stun:stun.l.google.com:19302"]

@@ -3,16 +3,23 @@
 
 <head>
   <title>Rover Feed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
   <h3>Rover Camera Feed</h3>
+  <p style="color: gray; font-size: 12px;">Tip: Use Chrome for best H.264 compatibility. Firefox may require OpenH264 plugin.</p>
   <video id="video" autoplay muted playsinline style="width: 100%; max-width: 640px; border: 1px solid black;"></video>
   <pre id="status">connecting...</pre>
 
   <script>
     const video = document.getElementById('video');
     const status = document.getElementById('status');
+
+    function setStatus(msg) {
+      status.textContent = msg;
+      console.log('[rover]', msg);
+    }
 
     // Same-origin WebSocket back to whatever host served this page —
     // so this works whether you open it via localhost or the server's LAN IP.
@@ -24,12 +31,31 @@
     pc.addTransceiver('video', { direction: 'recvonly' });
 
     pc.ontrack = (event) => {
+      setStatus('track received — codec negotiated, waiting for video...');
       video.srcObject = event.streams[0];
-      status.textContent = 'track received';
+
+      // Poll stats to see if frames are actually being decoded
+      const statsInterval = setInterval(async () => {
+        const stats = await pc.getStats();
+        stats.forEach(report => {
+          if (report.type === 'inbound-rtp' && report.kind === 'video') {
+            const info = `Codec: ${report.codecId || 'unknown'} | ` +
+              `Frames decoded: ${report.framesDecoded || 0} | ` +
+              `Frames dropped: ${report.framesDropped || 0} | ` +
+              `Packets received: ${report.packetsReceived || 0} | ` +
+              `Bytes received: ${report.bytesReceived || 0}`;
+            setStatus(info);
+            if (report.framesDecoded > 0) {
+              clearInterval(statsInterval);
+              setStatus('streaming! ' + info);
+            }
+          }
+        });
+      }, 1000);
     };
 
     pc.oniceconnectionstatechange = () => {
-      status.textContent = 'ICE state: ' + pc.iceConnectionState;
+      setStatus('ICE state: ' + pc.iceConnectionState);
     };
 
     pc.onicecandidate = (event) => {
@@ -53,7 +79,7 @@
       }
     };
 
-    ws.onerror = (e) => { status.textContent = 'WebSocket error'; console.error(e); };
+    ws.onerror = (e) => { setStatus('WebSocket error'); console.error(e); };
   </script>
 </body>
 
